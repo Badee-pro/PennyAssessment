@@ -1,0 +1,20 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t', 'us-central1-docker.pkg.dev/pennyassessment-466204/penny-backend/backend:v1',
+      '-f', 'apps/backend/Dockerfile',
+      '.'
+    ]
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t', 'us-central1-docker.pkg.dev/pennyassessment-466204/penny-frontend/frontend:v1',
+      '-f', 'apps/frontend/Dockerfile',
+      '.'
+    ]
+
+images:
+  - 'us-central1-docker.pkg.dev/pennyassessment-466204/penny-backend/backend:v1'
+  - 'us-central1-docker.pkg.dev/pennyassessment-466204/penny-frontend/frontend:v1'
