@@ -1,0 +1,47 @@
+<div class="wrapper"></div>
+<div id="formContent">
+  <a class="underlineHover" href="/signin">Sign In</a>
+  <a class="underlineHover" href="/signup">Sign Up</a>
+  <form (ngSubmit)="onSubmit()">
+    <!-- <label for="fullName">Full Name:</label> -->
+    <input
+      id="fullName"
+      [(ngModel)]="fullName"
+      name="fullName"
+      [pattern]="emailRegex"
+      placeholder="Full Name"
+      type="text"
+      required
+    />
+
+    <!-- <label for="email">Email:</label> -->
+    <input
+      id="email"
+      [(ngModel)]="email"
+      name="email"
+      type="text"
+      placeholder="Email"
+      required
+    />
+
+    <!-- <label for="password">Password:</label> -->
+    <input
+      id="password"
+      [(ngModel)]="password"
+      name="password"
+      placeholder="Password"
+      type="password"
+      required
+    />
+
+    <button type="submit">Sign Up</button>
+
+    <div *ngIf="successMessage" class="success">
+      {{ successMessage }}
+    </div>
+
+    <div class="alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>

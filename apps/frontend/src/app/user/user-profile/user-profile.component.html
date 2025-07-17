@@ -1,0 +1,24 @@
+<table class="table-fill">
+  <thead>
+    <tr>
+      <th colspan="2" class="text-center">User Profile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Full Name</td>
+      <!-- <td>{{ userDetails.fullName.split(' ')[0] }}</td> -->
+      <td>{{ fullName }}</td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td>{{ email }}</td>
+    </tr>
+    <tr>
+      <td colspan="2" class="text-center">
+        <!-- <input type="button" (click)="logout()" value="Logout" /> -->
+        <button type="button" (click)="logout()">Logout</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
