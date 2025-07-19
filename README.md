@@ -21,4 +21,4 @@ Frontend (Angular)
 nx serve frontend
 ```
 
-Video Walkthrough: 
+Video Walkthrough: https://www.youtube.com/watch?v=bjDz8nEbEUU&ab_channel=BadeeKhalbouss
