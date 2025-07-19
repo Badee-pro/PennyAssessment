@@ -18,8 +18,9 @@ import { JwtStrategy } from './jwt.strategy';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: () => ({
-        secret: process.env.JWT_SECRET ,
-        signOptions: { expiresIn: '8h' },
+        secret: process.env.JWT_SECRET,
+        // Set the JWT expiration time from environment variable or default to 8 hours
+        signOptions: { expiresIn: process.env.JWT_EXPIRATION || '8h' },
       }),
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),

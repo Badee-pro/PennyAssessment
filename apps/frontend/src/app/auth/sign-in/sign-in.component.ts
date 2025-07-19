@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
   styleUrl: './sign-in.component.css',
 })
 export class SignInComponent {
+  // Component properties
   email = '';
   password = '';
   errorMessage = '';
@@ -20,17 +22,20 @@ export class SignInComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  // Method to handle form submission
   onSubmit() {
     if (!this.email || !this.password) {
       this.errorMessage = 'Please fill in all fields.';
       return;
     }
 
+    // Validate email format
     const userCredentials = {
       email: this.email.toLowerCase(),
       password: this.password,
     };
 
+    // Send the user credentials to the backend for authentication
     this.http
       .post(`${environment.apiBaseUrl}/signin`, userCredentials)
       .subscribe(
@@ -38,6 +43,7 @@ export class SignInComponent {
           localStorage.setItem('token', response.accessToken);
           this.router.navigate(['/profile']);
         },
+        // Handle error response
         (error) => {
           if (error.error?.message) {
             this.errorMessage = error.error.message;

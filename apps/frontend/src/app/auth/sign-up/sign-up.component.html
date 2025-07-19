@@ -2,8 +2,9 @@
 <div id="formContent">
   <a class="underlineHover" href="/signin">Sign In</a>
   <a class="underlineHover" href="/signup">Sign Up</a>
+  <br>
+  <br>
   <form (ngSubmit)="onSubmit()">
-    <!-- <label for="fullName">Full Name:</label> -->
     <input
       id="fullName"
       [(ngModel)]="fullName"
@@ -14,7 +15,6 @@
       required
     />
 
-    <!-- <label for="email">Email:</label> -->
     <input
       id="email"
       [(ngModel)]="email"
@@ -24,7 +24,6 @@
       required
     />
 
-    <!-- <label for="password">Password:</label> -->
     <input
       id="password"
       [(ngModel)]="password"
@@ -34,6 +33,7 @@
       required
     />
 
+    <br>
     <button type="submit">Sign Up</button>
 
     <div *ngIf="successMessage" class="success">

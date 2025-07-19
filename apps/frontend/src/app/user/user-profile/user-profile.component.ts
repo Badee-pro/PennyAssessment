@@ -12,16 +12,19 @@ import { Router } from '@angular/router';
   styleUrl: './user-profile.component.css',
 })
 export class UserProfileComponent implements OnInit {
+  // Component properties
   fullName: string | undefined;
   email: string | undefined;
   errorMessage: string | undefined;
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  // Load user profile on component initialization
   ngOnInit() {
     this.loadUserProfile();
   }
 
+  // Method to load user profile information
   loadUserProfile() {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -29,6 +32,7 @@ export class UserProfileComponent implements OnInit {
       return;
     }
 
+    // Fetch user profile data from the backend
     this.http
       .get<{ user: { fullName: string; email: string } }>(
         `${environment.apiBaseUrl}/profile`,
@@ -44,6 +48,7 @@ export class UserProfileComponent implements OnInit {
           this.email = response.user.email;
         },
         (error) => {
+          // Handle error response
           this.errorMessage = 'Error loading profile';
           console.error('Error loading profile', error);
           if (error.status === 401) {
@@ -53,6 +58,7 @@ export class UserProfileComponent implements OnInit {
       );
   }
 
+  // Method to handle user logout
   logout(): void {
     localStorage.removeItem('token');
     this.router.navigate(['/signin']);

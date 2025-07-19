@@ -1,10 +1,12 @@
+
 <div class="wrapper">
   <div id="formContent">
     <a class="underlineHover" href="/signin">Sign In</a>
     <a class="underlineHover" href="/signup">Sign Up</a>
+      <br>
+  <br>
     <form (ngSubmit)="onSubmit()" #signInForm="ngForm">
       <div>
-        <!-- <label for="email">Email</label> -->
         <input
           type="text"
           id="email"
@@ -19,7 +21,9 @@
           class="validation-message"
           *ngIf="emailInput.invalid && emailInput.touched"
         >
-          <small class="validation-message" *ngIf="emailInput.errors?.['required']"
+          <small
+            class="validation-message"
+            *ngIf="emailInput.errors?.['required']"
             >Email is required</small
           >
           <small class="validation-message" *ngIf="emailInput.errors?.['email']"
@@ -29,7 +33,6 @@
       </div>
 
       <div>
-        <!-- <label for="password">Password</label> -->
         <input
           type="password"
           id="password"

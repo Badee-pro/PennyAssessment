@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
   styleUrl: './sign-up.component.css',
 })
 export class SignUpComponent {
+  // Component properties
   fullName = '';
   email = '';
   password = '';
@@ -22,6 +23,7 @@ export class SignUpComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  // Method to handle form submission
   onSubmit() {
     if (!this.fullName || !this.email || !this.password) {
       this.errorMessage = 'Please fill in all fields.';
@@ -32,7 +34,7 @@ export class SignUpComponent {
       return;
     }
 
-    const email = this.email.toLowerCase();
+    // const email = this.email.toLowerCase();
     this.http
       .post(`${environment.apiBaseUrl}/signup`, {
         fullName: this.fullName,
@@ -40,11 +42,12 @@ export class SignUpComponent {
         password: this.password,
       })
       .subscribe(
-        (response) => {
+        () => {
           this.successMessage = 'Saved successfully';
           this.errorMessage = '';
           setTimeout(() => this.router.navigate(['/signin']), 1000);
         },
+        // Handle error response
         (error) => {
           if (error.status === 400) {
             this.errorMessage = error.error.message;
@@ -52,6 +55,7 @@ export class SignUpComponent {
             this.errorMessage =
               'Sign up failed. Please check your details and try again.';
           }
+          // Clear success message on error
           this.successMessage = '';
           console.error('Sign up failed', error);
         }

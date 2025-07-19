@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
+// Define the User schema for MongoDB
 export interface UserDocument extends Document {
   fullName: string;
   email: string;
@@ -11,6 +12,7 @@ export interface UserDocument extends Document {
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
+// Create the User schema using Mongoose
 @Schema()
 export class User {
   @Prop({ required: true })
@@ -28,6 +30,7 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
+// Hash the password before saving the user document
 UserSchema.pre<UserDocument>('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
@@ -42,6 +45,7 @@ UserSchema.pre<UserDocument>('save', async function (next) {
   }
 });
 
+// Method to compare the candidate password with the hashed password
 UserSchema.methods.comparePassword = async function (
   candidatePassword: string
 ): Promise<boolean> {

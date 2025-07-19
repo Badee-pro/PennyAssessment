@@ -20,11 +20,13 @@ interface AuthResponse {
 
 @Injectable()
 export class AuthService {
+  // Inject JwtService to generate tokens
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private jwtService: JwtService
   ) {}
 
+  // Register a new user
   async signUp(signUpDto: SignUpDto) {
     const { fullName, email, password } = signUpDto;
 
@@ -36,6 +38,7 @@ export class AuthService {
 
     const lowerCaseEmail = email.toLowerCase();
 
+    // Check if email already exists
     const existingUser = await this.userModel.findOne({
       email: lowerCaseEmail,
     });
@@ -43,6 +46,7 @@ export class AuthService {
       throw new BadRequestException('User with this email already exists.');
     }
 
+    // Create a new user
     const user = new this.userModel({
       fullName,
       email: lowerCaseEmail,
@@ -53,21 +57,25 @@ export class AuthService {
     return this.createJwtToken(user);
   }
 
+  // Sign in an existing user
   async signIn(signInDto: SignInDto): Promise<AuthResponse> {
     const { email, password } = signInDto;
     const lowerCaseEmail = email.toLowerCase();
     const user = await this.userModel.findOne({ email: lowerCaseEmail });
 
+    // Check if user exists
     if (!user) {
       throw new UnauthorizedException('Email is not registered.');
     }
 
+    // Check if the user has exceeded login attempts
     if (user.loginAttempts >= 3) {
       throw new UnauthorizedException(
         'Your account has been locked due to multiple failed login attempts.'
       );
     }
 
+    // Compare the provided password with the stored hashed password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       user.loginAttempts += 1;
@@ -81,6 +89,7 @@ export class AuthService {
     return this.createJwtToken(user);
   }
 
+  // Create JWT payload and return access token
   createJwtToken(user: UserDocument): AuthResponse {
     const payload = { email: user.email, sub: user._id };
     return {
@@ -92,10 +101,12 @@ export class AuthService {
     };
   }
 
+  // Find user by email
   async findByEmail(email: string) {
     return this.userModel.findOne({ email: email.toLowerCase() });
   }
 
+  // Find user by id
   async findById(userId: string) {
     return this.userModel.findById(userId);
   }

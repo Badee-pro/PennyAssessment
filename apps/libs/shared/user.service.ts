@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../frontend/src/environments/environment';
 import { User } from './user.model';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  registerUser(user: User): Observable<any> {
+  registerUser(user: User): Observable<unknown> {
     return this.http.post(
       `${environment.apiBaseUrl}/signup`,
       user,
@@ -20,7 +20,10 @@ export class UserService {
     );
   }
 
-  login(authCredentials: { email: string; password: string }): Observable<any> {
+  login(authCredentials: {
+    email: string;
+    password: string;
+  }): Observable<unknown> {
     return this.http.post(
       `${environment.apiBaseUrl}/signin`,
       authCredentials,
@@ -28,7 +31,7 @@ export class UserService {
     );
   }
 
-  getUserProfile(): Observable<any> {
+  getUserProfile(): Observable<unknown> {
     const token = this.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${environment.apiBaseUrl}/profile`, { headers });
@@ -46,7 +49,7 @@ export class UserService {
     localStorage.removeItem('token');
   }
 
-  getUserPayload(): any {
+  getUserPayload(): unknown {
     const token = this.getToken();
     if (token) {
       const userPayload = atob(token.split('.')[1]);

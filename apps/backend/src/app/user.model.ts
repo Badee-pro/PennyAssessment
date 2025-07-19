@@ -20,15 +20,19 @@ export class User extends Document {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
+// Pre-save hook to hash the password and ensure email is lowercase
 UserSchema.pre('save', async function (next) {
   const user = this as User;
 
+  // Ensure email is always stored in lowercase
   if (user.email) {
     user.email = user.email.toLowerCase();
   }
 
+  // Hash the password if it has been modified or is new
   if (!user.isModified('password')) return next();
 
+  // Generate a salt and hash the password
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   next();
